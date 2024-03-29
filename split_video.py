@@ -10,9 +10,10 @@
 """
 import os.path
 import time
+import glob
 
 import cv2
-import glob
+import tqdm
 
 
 def _get_image_path(video_path: str) -> str:
@@ -40,12 +41,14 @@ def _handle(filename: str):
               "width", cv.get(cv2.CAP_PROP_FRAME_WIDTH), "height", cv.get(cv2.CAP_PROP_FRAME_HEIGHT))
         os.makedirs(video_image_path, exist_ok=True)
         n = 0
+        pbar = tqdm.tqdm(desc="Processing", total=cv.get(cv2.CAP_PROP_FRAME_COUNT))
         while True:
             rval, frame = cv.read()
             if rval:
                 cv2.imwrite(os.path.join(video_image_path, f"{n}.jpg"), frame)
                 cv2.waitKey(1)
                 n += 1
+                pbar.update(1)
             else:
                 break
     else:
