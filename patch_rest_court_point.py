@@ -35,7 +35,7 @@ def filter_court_point(shape_data) -> List:
     if len(shape_data) < 10:
         return shape_data
 
-    return [shape for shape in shape_data if shape["label"] not in ("court", "pole")]
+    return [shape for shape in shape_data if shape["label"] not in ("court", "pole", "pole_top")]
 
 
 def save_append_file(data, file):
